@@ -3,6 +3,10 @@ const LogbookEntryAbl = require("../../abl/logbook-entry-abl.js");
 
 class LogbookEntryController {
 
+  update(ucEnv) {
+    return LogbookEntryAbl.update(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
+  }
+
   delete(ucEnv) {
     return LogbookEntryAbl.delete(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
   }

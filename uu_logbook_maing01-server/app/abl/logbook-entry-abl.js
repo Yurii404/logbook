@@ -16,6 +16,9 @@ const WARNINGS = {
   deleteUnsupportedKeys: {
     code: `${Errors.Delete.UC_CODE}unsupportedKeys`,
   },
+  updateUnsupportedKeys: {
+    code: `${Errors.Update.UC_CODE}unsupportedKeys`,
+  },
 };
 
 class LogbookEntryAbl {
@@ -26,7 +29,84 @@ class LogbookEntryAbl {
     this.mainDao = DaoFactory.getDao("logbookMain");
   }
 
+  async update(awid, dtoIn, uuAppErrorMap ={}) {
+    //HDS 2
+    let uuLogbook = null;
 
+    try {
+      uuLogbook = await this.mainDao.getByAwid(awid);
+    } catch (e) {
+      throw new Errors.Update.LogBookMainDoesNotExist({ uuAppErrorMap }, e);
+    }
+
+    if (uuLogbook.state !== "active" && uuLogbook.state !== "underConstruction") {
+      throw new Errors.Update.LogBookMainIsNotInProperState(
+        { uuAppErrorMap },
+        {
+          awid,
+          state: uuLogbook.state,
+          expectedState: "active",
+        }
+      );
+    }
+
+    // HDS 1
+    let validationResult = this.validator.validate("logBookEntryUpdateDtoInType", dtoIn);
+    // A1, A2
+    uuAppErrorMap = ValidationHelper.processValidationResult(
+      dtoIn,
+      validationResult,
+      WARNINGS.getUnsupportedKeys.code,
+      Errors.Update.InvalidDtoIn
+    );
+
+    //HDS -2 find a logbook
+    let uuLogbookEntry = null;
+
+    uuLogbookEntry = await this.logbookDao.get(awid, dtoIn.id);
+
+    if(!uuLogbookEntry){
+      throw new Errors.Update.RecordInLogBookgetDaoFailed({ uuAppErrorMap });
+    }
+
+    //HDS -3 update fields
+    if(dtoIn.departureDate){
+      uuLogbookEntry.departureDate = dtoIn.departureDate;
+    }
+    if(dtoIn.arrivalDate){
+      uuLogbookEntry.arrivalDate = dtoIn.arrivalDate;
+    }
+    if(dtoIn.departurePlace){
+      uuLogbookEntry.departurePlace = dtoIn.departurePlace;
+    }
+    if(dtoIn.arrivalPlace){
+      uuLogbookEntry.arrivalPlace = dtoIn.arrivalPlace;
+    }
+    if(dtoIn.coPilotIdentity){
+      uuLogbookEntry.coPilotIdentity = dtoIn.coPilotIdentity;
+    }
+    if(dtoIn.entryState){
+      uuLogbookEntry.entryState = dtoIn.entryState;
+    }
+    if(dtoIn.regNum){
+      uuLogbookEntry.regNum = dtoIn.regNum;
+    }
+
+    //HDS - 4 update logbook entry
+
+    uuLogbookEntry = this.logbookDao.update(uuLogbookEntry);
+
+    if(!uuLogbookEntry){
+      throw new Errors.Update.LogBookEntryDaoUpdateFailed({ uuAppErrorMap });
+    }
+
+    return{
+      ...uuLogbookEntry,
+      uuAppErrorMap
+    }
+
+
+  }
 
   async delete(awid, dtoIn, session, uuAppErrorMap = {}) {
     //HDS 2
@@ -165,7 +245,7 @@ class LogbookEntryAbl {
     dtoIn.entryState = "in_progress";
 
     // HDS - 4 Validation departureDate and arrivalDate in dtoIn
-    if (dtoIn.departureFlight >= dtoIn.arrivalFlight) {
+    if (dtoIn.departureDate >= dtoIn.arrivalDate) {
       throw new Errors.Create.ArrivalDateIsNotCorrect({ uuAppErrorMap }, { arrivalDate: dtoIn.arrivalDate, departureDate: dtoIn.departureDate });
     }
 

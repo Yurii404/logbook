@@ -80,6 +80,10 @@
       "logbookEntry/delete": {
         "sysStateList": ["active"],
         "profileList": ["Operators","Pilots"]
+      },
+      "logbookEntry/update": {
+        "sysStateList": ["active"],
+        "profileList": ["Operators"]
       }
     }
   }

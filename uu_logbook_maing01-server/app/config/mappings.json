@@ -95,6 +95,11 @@
         "realization": "api/controllers/LogbookEntryController.delete",
         "httpMethod": "POST",
         "type": "CMD"
+      },
+      "logbookEntry/update": {
+        "realization": "api/controllers/LogbookEntryController.update",
+        "httpMethod": "POST",
+        "type": "CMD"
       }
     }
   }

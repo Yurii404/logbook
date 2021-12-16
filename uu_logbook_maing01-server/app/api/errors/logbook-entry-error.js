@@ -136,7 +136,54 @@ const Delete = {
 
 };
 
+const Update = {
+  UC_CODE: `${LOGBOOK_ENTRY_ERROR_PREFIX}update/`,
+
+  LogBookMainDoesNotExist: class extends LogbookMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Update.UC_CODE}logbookMainDoesNotExist`;
+      this.message = "LogBook Main does not exist.";
+    }
+  },
+
+  LogBookMainIsNotInProperState: class extends LogbookMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Update.UC_CODE}logbookMainIsNotInProperState`;
+      this.message = "LogBook Main Is Not In Proper State.";
+    }
+  },
+
+  InvalidDtoIn: class extends LogbookMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Update.UC_CODE}invalidDtoIn`;
+      this.message = "DtoIn is not valid.";
+    }
+  },
+
+  RecordInLogBookgetDaoFailed: class extends LogbookMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Update.UC_CODE}recordInLogBookgetDaoFailed`;
+      this.message = "RecordInLogBook get DAO failed.";
+    }
+  },
+  LogBookEntryDaoUpdateFailed: class extends LogbookMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Update.UC_CODE}logBookEntryDaoUpdateFailed`;
+      this.message = "Update logBookEntry by logBookEntry Dao update failed.";
+    }
+  },
+
+
+
+};
+
 module.exports = {
+  Update,
   Delete,
   Get,
   Create
