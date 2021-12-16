@@ -33,6 +33,66 @@ class LogbookEntryMongo extends UuObjectDao {
     };
     return await super.deleteOne(filter);
   }
+
+  async list( uuObject) {
+    let filter = {
+    };
+    let mysort = null;
+
+    if (uuObject.sortBy === "departureDate") {
+      if (uuObject.order === "asc") {
+        mysort = { departureDate: 1 };
+      } else {
+        mysort = { departureDate: -1 };
+      }
+    }
+    if (uuObject.sortBy === "regNum") {
+      if (uuObject.order === "asc") {
+        mysort = { regNum: 1 };
+      } else {
+        mysort = { regNum: -1 };
+      }
+    }
+
+    if (uuObject.sortBy){
+      return super.find(filter, uuObject.pageInfo, mysort);
+    }else {
+      return super.find(filter, uuObject.pageInfo);
+    }
+
+
+  }
+
+  async listByPilot(uuObject) {
+    let filter = {
+      uuIdentity: uuObject.uuIdentity
+    };
+    let mysort = null;
+
+    if (uuObject.sortBy === "departureDate") {
+      if (uuObject.order === "asc") {
+        mysort = { departureDate: 1 };
+      } else {
+        mysort = { departureDate: -1 };
+      }
+    }
+    if (uuObject.sortBy === "regNum") {
+      if (uuObject.order === "asc") {
+        mysort = { regNum: 1 };
+      } else {
+        mysort = { regNum: -1 };
+      }
+    }
+
+    if (uuObject.sortBy){
+      return super.find(filter, uuObject.pageInfo, mysort);
+    }else {
+      return super.find(filter, uuObject.pageInfo);
+    }
+
+
+  }
+
 }
 
 module.exports = LogbookEntryMongo;

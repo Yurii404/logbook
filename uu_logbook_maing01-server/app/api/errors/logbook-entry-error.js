@@ -179,10 +179,45 @@ const Update = {
   },
 
 
+};
+
+const List = {
+  UC_CODE: `${LOGBOOK_ENTRY_ERROR_PREFIX}list/`,
+
+  LogBookMainDoesNotExist: class extends LogbookMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${List.UC_CODE}logbookMainDoesNotExist`;
+      this.message = "LogBook Main does not exist.";
+    }
+  },
+
+  LogBookMainIsNotInProperState: class extends LogbookMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${List.UC_CODE}logbookMainIsNotInProperState`;
+      this.message = "LogBook Main Is Not In Proper State.";
+    }
+  },
+
+  InvalidDtoIn: class extends LogbookMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${List.UC_CODE}invalidDtoIn`;
+      this.message = "DtoIn is not valid.";
+    }
+  },
 
 };
 
+const ListByPilot = {
+  UC_CODE: `${LOGBOOK_ENTRY_ERROR_PREFIX}listByPilot/`,
+  
+};
+
 module.exports = {
+  ListByPilot,
+  List,
   Update,
   Delete,
   Get,

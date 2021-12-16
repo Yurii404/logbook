@@ -84,6 +84,14 @@
       "logbookEntry/update": {
         "sysStateList": ["active"],
         "profileList": ["Operators"]
+      },
+      "logbookEntry/list": {
+        "sysStateList": ["active"],
+        "profileList": ["Operators","Pilots"]
+      },
+      "logbookEntry/listByPilot": {
+        "sysStateList": ["active"],
+        "profileList": ["Operators","Pilots"]
       }
     }
   }

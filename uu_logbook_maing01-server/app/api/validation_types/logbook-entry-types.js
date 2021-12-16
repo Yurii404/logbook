@@ -24,3 +24,12 @@ const logBookEntryUpdateDtoInType = shape({
   regNum: string(6),
   entryState: oneOf(["approved", "disapproved", "in_progress"])
 })
+const logBookEntryListDtoInType = shape({
+  sortBy: oneOf(["regNum", "departureDate"]),
+  order: oneOf(["asc", "desc"]),
+  regNum: string(6),
+  pageInfo: shape({
+    pageIndex: integer(),
+    pageSize: integer()
+  })
+})

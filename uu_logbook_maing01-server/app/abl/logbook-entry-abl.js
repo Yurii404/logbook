@@ -19,6 +19,9 @@ const WARNINGS = {
   updateUnsupportedKeys: {
     code: `${Errors.Update.UC_CODE}unsupportedKeys`,
   },
+  listUnsupportedKeys: {
+    code: `${Errors.List.UC_CODE}unsupportedKeys`,
+  },
 };
 
 class LogbookEntryAbl {
@@ -27,6 +30,135 @@ class LogbookEntryAbl {
     this.validator = Validator.load();
     this.logbookDao = DaoFactory.getDao("logbookEntry");
     this.mainDao = DaoFactory.getDao("logbookMain");
+  }
+
+  async listByPilot(awid, session, dtoIn, uuAppErrorMap = {}) {
+    //HDS 2
+    let uuLogbook = null;
+
+    try {
+      uuLogbook = await this.mainDao.getByAwid(awid);
+    } catch (e) {
+      throw new Errors.Update.LogBookMainDoesNotExist({ uuAppErrorMap }, e);
+    }
+
+    if (uuLogbook.state !== "active" && uuLogbook.state !== "underConstruction") {
+      throw new Errors.Update.LogBookMainIsNotInProperState(
+        { uuAppErrorMap },
+        {
+          awid,
+          state: uuLogbook.state,
+          expectedState: "active",
+        }
+      );
+    }
+
+    // HDS 1
+    let validationResult = this.validator.validate("logBookEntryListDtoInType", dtoIn);
+    // A1, A2
+    uuAppErrorMap = ValidationHelper.processValidationResult(
+      dtoIn,
+      validationResult,
+      WARNINGS.getUnsupportedKeys.code,
+      Errors.Update.InvalidDtoIn
+    );
+
+    //HDS 2
+    if(!dtoIn.pageInfo){
+      dtoIn.pageInfo = {
+        pageIndex : null,
+        pageSize : null
+      };
+    }
+    if(!dtoIn.pageInfo.pageIndex){
+      dtoIn.pageInfo.pageIndex = 0;
+    }
+    if(!dtoIn.pageInfo.pageSize){
+      dtoIn.pageInfo.pageSize = 50;
+    }
+
+    if(!dtoIn.sortBy){
+      dtoIn.sortBy = "departureDate";
+    }
+    if(!dtoIn.order){
+      dtoIn.order = "desc";
+    }
+
+    dtoIn.uuIdentity = session.getIdentity().getUuIdentity();
+
+    // HDS 3
+
+    let uuListOfIAircrafts = await this.logbookDao.listByPilot(dtoIn)
+
+    // HDS 4
+    return {
+      ...uuListOfIAircrafts,
+      uuAppErrorMap,
+    }
+  }
+
+  async list(awid, dtoIn, uuAppErrorMap ={}) {
+    //HDS 2
+    let uuLogbook = null;
+
+    try {
+      uuLogbook = await this.mainDao.getByAwid(awid);
+    } catch (e) {
+      throw new Errors.Update.LogBookMainDoesNotExist({ uuAppErrorMap }, e);
+    }
+
+    if (uuLogbook.state !== "active" && uuLogbook.state !== "underConstruction") {
+      throw new Errors.Update.LogBookMainIsNotInProperState(
+        { uuAppErrorMap },
+        {
+          awid,
+          state: uuLogbook.state,
+          expectedState: "active",
+        }
+      );
+    }
+
+    // HDS 1
+    let validationResult = this.validator.validate("logBookEntryListDtoInType", dtoIn);
+    // A1, A2
+    uuAppErrorMap = ValidationHelper.processValidationResult(
+      dtoIn,
+      validationResult,
+      WARNINGS.getUnsupportedKeys.code,
+      Errors.Update.InvalidDtoIn
+    );
+
+    //HDS 2
+    if(!dtoIn.pageInfo){
+      dtoIn.pageInfo = {
+        pageIndex : null,
+        pageSize : null
+      };
+    }
+    if(!dtoIn.pageInfo.pageIndex){
+      dtoIn.pageInfo.pageIndex = 0;
+    }
+    if(!dtoIn.pageInfo.pageSize){
+      dtoIn.pageInfo.pageSize = 50;
+    }
+    if(!dtoIn.sortBy){
+      dtoIn.sortBy = "departureDate";
+    }
+    if(!dtoIn.order){
+      dtoIn.order = "desc";
+    }
+
+    // HDS 3
+
+    let uuListOfIAircrafts = await this.logbookDao.list(dtoIn)
+
+    // HDS 4
+    return {
+      ...uuListOfIAircrafts,
+      uuAppErrorMap,
+    }
+
+
   }
 
   async update(awid, dtoIn, uuAppErrorMap ={}) {
