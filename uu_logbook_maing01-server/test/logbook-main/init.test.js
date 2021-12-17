@@ -15,7 +15,7 @@ describe("Testing the init uuCmd...", () => {
     let session = await TestHelper.login("AwidLicenseOwner", false, false);
 
     let dtoIn = {
-      uuAppProfileAuthorities: "urn:uu:GGALL",
+      uuAppProfileAuthorities: "Operators",
     };
     let result = await TestHelper.executePostCommand("sys/uuAppWorkspace/init", dtoIn, session);
 

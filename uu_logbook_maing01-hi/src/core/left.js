@@ -42,7 +42,7 @@ export const Left = createVisualComponent({
           companyLogo: Plus4U5.Environment.basePath + "assets/img/unicorn-logo.svg",
           generation: "1",
         }}
-        aboutItems={[{ content: <UU5.Bricks.Lsi lsi={Lsi.left.about} />, href: "about" }]}
+        // aboutItems={[{ content: <UU5.Bricks.Lsi lsi={Lsi.left.about} />, href: "about" }]}
         helpHref={null}
       >
         <Plus4U5.App.MenuTree

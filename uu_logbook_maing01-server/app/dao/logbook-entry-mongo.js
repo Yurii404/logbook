@@ -89,8 +89,6 @@ class LogbookEntryMongo extends UuObjectDao {
     }else {
       return super.find(filter, uuObject.pageInfo);
     }
-
-
   }
 
 }

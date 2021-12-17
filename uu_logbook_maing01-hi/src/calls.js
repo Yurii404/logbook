@@ -13,6 +13,35 @@ let Calls = {
     return response.data;
   },
 
+  listLogbookEntrys(dtoIn) {
+    let commandUri = Calls.getCommandUri("logbookEntry/list");
+    return Calls.call("get", commandUri, dtoIn);
+  },
+
+  listLogbookEntrysByPilot(dtoIn) {
+    let commandUri = Calls.getCommandUri("logbookEntry/listByPilot");
+    return Calls.call("get", commandUri, dtoIn);
+  },
+  getLogbookEntry(dtoIn) {
+    let commandUri = Calls.getCommandUri("logbookEntry/get");
+    return Calls.call("get", commandUri, dtoIn);
+  },
+
+  createLogbookEntry(dtoIn) {
+    let commandUri = Calls.getCommandUri("logbookEntry/create");
+    return Calls.call("post", commandUri, dtoIn);
+  },
+
+  updateLogbookEntry(dtoIn) {
+    let commandUri = Calls.getCommandUri("logbookEntry/update");
+    return Calls.call("post", commandUri, dtoIn);
+  },
+
+  deleteLogbookEntry(dtoIn) {
+    let commandUri = Calls.getCommandUri("logbookEntry/delete");
+    return Calls.call("post", commandUri, dtoIn);
+  },
+
   loadDemoContent(dtoIn) {
     let commandUri = Calls.getCommandUri("loadDemoContent");
     return Calls.call("get", commandUri, dtoIn);
