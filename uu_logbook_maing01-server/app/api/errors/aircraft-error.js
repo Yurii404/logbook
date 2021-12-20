@@ -43,7 +43,6 @@ const Create = {
       this.message = "Aircraft Dao Create Failed";
     }
   },
-
 };
 
 const Get = {
@@ -86,7 +85,6 @@ const Get = {
       this.message = "DtoIn is not valid.";
     }
   },
-
 };
 
 const Delete = {
@@ -143,14 +141,13 @@ const Delete = {
       this.message = "Can not delete Active aircraft.";
     }
   },
-  AircraftDaoDeleteFailed	: class extends LogbookMainUseCaseError {
+  AircraftDaoDeleteFailed: class extends LogbookMainUseCaseError {
     constructor() {
       super(...arguments);
       this.code = `${Delete.UC_CODE}aircraftDaoDeleteFailed.`;
       this.message = "The system failed to delete the aircraft uuObject.";
     }
   },
-
 };
 
 const List = {
@@ -179,7 +176,6 @@ const List = {
       this.message = "DtoIn is not valid.";
     }
   },
-
 };
 
 const GetAircraftImage = {
@@ -215,12 +211,10 @@ const GetAircraftImage = {
       this.message = "Aircraft Image Does Not Exist.";
     }
   },
-
 };
 
 const SetState = {
   UC_CODE: `${AIRCRAFT_ERROR_PREFIX}setState/`,
-
 
   LogBookMainDoesNotExist: class extends LogbookMainUseCaseError {
     constructor() {
@@ -254,12 +248,11 @@ const SetState = {
   },
 };
 
-
 module.exports = {
   SetState,
   GetAircraftImage,
   List,
   Delete,
   Get,
-  Create
+  Create,
 };

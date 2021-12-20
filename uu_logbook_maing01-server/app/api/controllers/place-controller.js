@@ -2,7 +2,6 @@
 const PlaceAbl = require("../../abl/place-abl.js");
 
 class PlaceController {
-
   list(ucEnv) {
     return PlaceAbl.list(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
   }
@@ -18,7 +17,6 @@ class PlaceController {
   create(ucEnv) {
     return PlaceAbl.create(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
   }
-
 }
 
 module.exports = new PlaceController();

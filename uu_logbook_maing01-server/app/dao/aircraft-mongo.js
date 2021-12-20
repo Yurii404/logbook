@@ -22,7 +22,7 @@ class AircraftMongo extends UuObjectDao {
   async getByRegNumber(awid, regNum) {
     let filter = {
       awid,
-      regNum
+      regNum,
     };
     return await super.findOne(filter);
   }
@@ -42,7 +42,7 @@ class AircraftMongo extends UuObjectDao {
   async delete(awid, id) {
     let filter = {
       awid,
-      id
+      id,
     };
     return await super.deleteOne(filter);
   }

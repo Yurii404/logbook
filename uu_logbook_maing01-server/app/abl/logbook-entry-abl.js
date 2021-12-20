@@ -25,7 +25,6 @@ const WARNINGS = {
 };
 
 class LogbookEntryAbl {
-
   constructor() {
     this.validator = Validator.load();
     this.logbookDao = DaoFactory.getDao("logbookEntry");
@@ -64,23 +63,23 @@ class LogbookEntryAbl {
     );
 
     //HDS 2
-    if(!dtoIn.pageInfo){
+    if (!dtoIn.pageInfo) {
       dtoIn.pageInfo = {
-        pageIndex : null,
-        pageSize : null
+        pageIndex: null,
+        pageSize: null,
       };
     }
-    if(!dtoIn.pageInfo.pageIndex){
+    if (!dtoIn.pageInfo.pageIndex) {
       dtoIn.pageInfo.pageIndex = 0;
     }
-    if(!dtoIn.pageInfo.pageSize){
+    if (!dtoIn.pageInfo.pageSize) {
       dtoIn.pageInfo.pageSize = 50;
     }
 
-    if(!dtoIn.sortBy){
+    if (!dtoIn.sortBy) {
       dtoIn.sortBy = "departureDate";
     }
-    if(!dtoIn.order){
+    if (!dtoIn.order) {
       dtoIn.order = "desc";
     }
 
@@ -88,16 +87,16 @@ class LogbookEntryAbl {
 
     // HDS 3
 
-    let uuListOfIAircrafts = await this.logbookDao.listByPilot(dtoIn)
+    let uuListOfIAircrafts = await this.logbookDao.listByPilot(dtoIn);
 
     // HDS 4
     return {
       ...uuListOfIAircrafts,
       uuAppErrorMap,
-    }
+    };
   }
 
-  async list(awid, dtoIn, uuAppErrorMap ={}) {
+  async list(awid, dtoIn, uuAppErrorMap = {}) {
     //HDS 2
     let uuLogbook = null;
 
@@ -129,39 +128,37 @@ class LogbookEntryAbl {
     );
 
     //HDS 2
-    if(!dtoIn.pageInfo){
+    if (!dtoIn.pageInfo) {
       dtoIn.pageInfo = {
-        pageIndex : null,
-        pageSize : null
+        pageIndex: null,
+        pageSize: null,
       };
     }
-    if(!dtoIn.pageInfo.pageIndex){
+    if (!dtoIn.pageInfo.pageIndex) {
       dtoIn.pageInfo.pageIndex = 0;
     }
-    if(!dtoIn.pageInfo.pageSize){
+    if (!dtoIn.pageInfo.pageSize) {
       dtoIn.pageInfo.pageSize = 50;
     }
-    if(!dtoIn.sortBy){
+    if (!dtoIn.sortBy) {
       dtoIn.sortBy = "departureDate";
     }
-    if(!dtoIn.order){
+    if (!dtoIn.order) {
       dtoIn.order = "desc";
     }
 
     // HDS 3
 
-    let uuListOfIAircrafts = await this.logbookDao.list(dtoIn)
+    let uuListOfIAircrafts = await this.logbookDao.list(dtoIn);
 
     // HDS 4
     return {
       ...uuListOfIAircrafts,
       uuAppErrorMap,
-    }
-
-
+    };
   }
 
-  async update(awid, dtoIn, uuAppErrorMap ={}) {
+  async update(awid, dtoIn, uuAppErrorMap = {}) {
     //HDS 2
     let uuLogbook = null;
 
@@ -197,30 +194,30 @@ class LogbookEntryAbl {
 
     uuLogbookEntry = await this.logbookDao.get(awid, dtoIn.id);
 
-    if(!uuLogbookEntry){
+    if (!uuLogbookEntry) {
       throw new Errors.Update.RecordInLogBookgetDaoFailed({ uuAppErrorMap });
     }
 
     //HDS -3 update fields
-    if(dtoIn.departureDate){
+    if (dtoIn.departureDate) {
       uuLogbookEntry.departureDate = dtoIn.departureDate;
     }
-    if(dtoIn.arrivalDate){
+    if (dtoIn.arrivalDate) {
       uuLogbookEntry.arrivalDate = dtoIn.arrivalDate;
     }
-    if(dtoIn.departurePlace){
+    if (dtoIn.departurePlace) {
       uuLogbookEntry.departurePlace = dtoIn.departurePlace;
     }
-    if(dtoIn.arrivalPlace){
+    if (dtoIn.arrivalPlace) {
       uuLogbookEntry.arrivalPlace = dtoIn.arrivalPlace;
     }
-    if(dtoIn.coPilotIdentity){
+    if (dtoIn.coPilotIdentity) {
       uuLogbookEntry.coPilotIdentity = dtoIn.coPilotIdentity;
     }
-    if(dtoIn.entryState){
+    if (dtoIn.entryState) {
       uuLogbookEntry.entryState = dtoIn.entryState;
     }
-    if(dtoIn.regNum){
+    if (dtoIn.regNum) {
       uuLogbookEntry.regNum = dtoIn.regNum;
     }
 
@@ -228,16 +225,14 @@ class LogbookEntryAbl {
 
     uuLogbookEntry = this.logbookDao.update(uuLogbookEntry);
 
-    if(!uuLogbookEntry){
+    if (!uuLogbookEntry) {
       throw new Errors.Update.LogBookEntryDaoUpdateFailed({ uuAppErrorMap });
     }
 
-    return{
+    return {
       ...uuLogbookEntry,
-      uuAppErrorMap
-    }
-
-
+      uuAppErrorMap,
+    };
   }
 
   async delete(awid, dtoIn, session, uuAppErrorMap = {}) {
@@ -276,11 +271,9 @@ class LogbookEntryAbl {
 
     uuLogbookEntry = await this.logbookDao.get(awid, dtoIn.id);
 
-    if(!uuLogbookEntry){
+    if (!uuLogbookEntry) {
       throw new Errors.Delete.RecordInLogBookgetDaoFailed({ uuAppErrorMap });
     }
-
-
 
     //HDS - 6 delete logbook
     let uuDeletedLogbookEntry = null;
@@ -294,7 +287,6 @@ class LogbookEntryAbl {
       ...uuDeletedLogbookEntry,
       uuAppErrorMap,
     };
-
   }
 
   async get(awid, dtoIn, session, uuAppErrorMap = {}) {
@@ -333,12 +325,11 @@ class LogbookEntryAbl {
 
     uuLogbookEntry = await this.logbookDao.get(awid, dtoIn.id);
 
-    if(!uuLogbookEntry){
+    if (!uuLogbookEntry) {
       throw new Errors.Get.RecordInLogBookgetDaoFailed({ uuAppErrorMap });
     }
     //HDS -3 return
     return { ...uuLogbookEntry, uuAppErrorMap };
-
   }
 
   async create(awid, session, dtoIn, uuAppErrorMap = {}) {
@@ -378,12 +369,18 @@ class LogbookEntryAbl {
 
     // HDS - 4 Validation departureDate and arrivalDate in dtoIn
     if (dtoIn.departureDate >= dtoIn.arrivalDate) {
-      throw new Errors.Create.ArrivalDateIsNotCorrect({ uuAppErrorMap }, { arrivalDate: dtoIn.arrivalDate, departureDate: dtoIn.departureDate });
+      throw new Errors.Create.ArrivalDateIsNotCorrect(
+        { uuAppErrorMap },
+        { arrivalDate: dtoIn.arrivalDate, departureDate: dtoIn.departureDate }
+      );
     }
 
     // HGS - 5 Validation departurePlace and arrivalPlace in dtoIn.
     if (dtoIn.departurePlace === dtoIn.arrivalPlace) {
-      throw new Errors.Create.ArrivalPlaceIsNotCorrect({ uuAppErrorMap }, { arrivalPlace: dtoIn.arrivalPlace, departurePlace: dtoIn.departurePlace });
+      throw new Errors.Create.ArrivalPlaceIsNotCorrect(
+        { uuAppErrorMap },
+        { arrivalPlace: dtoIn.arrivalPlace, departurePlace: dtoIn.departurePlace }
+      );
     }
 
     // HDS 6 - create via DAO
@@ -400,9 +397,7 @@ class LogbookEntryAbl {
       ...uuLogbookEntry,
       uuAppErrorMap,
     };
-
   }
-
 }
 
 module.exports = new LogbookEntryAbl();

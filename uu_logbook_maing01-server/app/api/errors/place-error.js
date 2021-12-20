@@ -36,7 +36,6 @@ const Create = {
       this.message = "Place Dao Create Failed";
     }
   },
-
 };
 
 const Get = {
@@ -107,15 +106,13 @@ const Delete = {
       this.message = "Place get DAO failed.";
     }
   },
-  PlaceDaoDeleteFailed	: class extends LogbookMainUseCaseError {
+  PlaceDaoDeleteFailed: class extends LogbookMainUseCaseError {
     constructor() {
       super(...arguments);
       this.code = `${Delete.UC_CODE}placeDaoDeleteFailed.`;
       this.message = "The system failed to delete the place uuObject.";
     }
   },
-
-
 };
 
 const List = {
@@ -150,5 +147,5 @@ module.exports = {
   List,
   Delete,
   Get,
-  Create
+  Create,
 };

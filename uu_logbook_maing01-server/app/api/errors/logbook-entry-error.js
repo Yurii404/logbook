@@ -50,7 +50,6 @@ const Create = {
       this.message = "Create logBookEntry by logBookEntry DAO create failed.";
     }
   },
-
 };
 
 const Get = {
@@ -87,8 +86,6 @@ const Get = {
       this.message = "RecordInLogBook get DAO failed.";
     }
   },
-
-
 };
 
 const Delete = {
@@ -132,8 +129,6 @@ const Delete = {
       this.message = "RecordInLogBook delete DAO failed.";
     }
   },
-
-
 };
 
 const Update = {
@@ -177,8 +172,6 @@ const Update = {
       this.message = "Update logBookEntry by logBookEntry Dao update failed.";
     }
   },
-
-
 };
 
 const List = {
@@ -207,12 +200,10 @@ const List = {
       this.message = "DtoIn is not valid.";
     }
   },
-
 };
 
 const ListByPilot = {
   UC_CODE: `${LOGBOOK_ENTRY_ERROR_PREFIX}listByPilot/`,
-  
 };
 
 module.exports = {
@@ -221,5 +212,5 @@ module.exports = {
   Update,
   Delete,
   Get,
-  Create
+  Create,
 };

@@ -34,9 +34,8 @@ class LogbookEntryMongo extends UuObjectDao {
     return await super.deleteOne(filter);
   }
 
-  async list( uuObject) {
-    let filter = {
-    };
+  async list(uuObject) {
+    let filter = {};
     let mysort = null;
 
     if (uuObject.sortBy === "departureDate") {
@@ -54,18 +53,16 @@ class LogbookEntryMongo extends UuObjectDao {
       }
     }
 
-    if (uuObject.sortBy){
+    if (uuObject.sortBy) {
       return super.find(filter, uuObject.pageInfo, mysort);
-    }else {
+    } else {
       return super.find(filter, uuObject.pageInfo);
     }
-
-
   }
 
   async listByPilot(uuObject) {
     let filter = {
-      uuIdentity: uuObject.uuIdentity
+      uuIdentity: uuObject.uuIdentity,
     };
     let mysort = null;
 
@@ -84,13 +81,12 @@ class LogbookEntryMongo extends UuObjectDao {
       }
     }
 
-    if (uuObject.sortBy){
+    if (uuObject.sortBy) {
       return super.find(filter, uuObject.pageInfo, mysort);
-    }else {
+    } else {
       return super.find(filter, uuObject.pageInfo);
     }
   }
-
 }
 
 module.exports = LogbookEntryMongo;

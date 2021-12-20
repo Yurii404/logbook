@@ -4,12 +4,12 @@ const Lsi = {
   },
   info: {
     en:
-      "<uu5string/>On this form you can update your Some. For more information see <UU5.Bricks.Link href='%s' target='_blank' content='documentation'/>.",
+      "<uu5string/>On this form you can update your Logbook Entry. For more information see <UU5.Bricks.Link href='%s' target='_blank' content='documentation'/>.",
   },
   submit: (param) => {
     return {
-      en: `Submit ${param}`
-    }
+      en: `Submit ${param}`,
+    };
   },
   cancel: {
     en: "Cancel",
@@ -25,7 +25,7 @@ const Lsi = {
   },
   saveSuccess: {
     en: "Saving was failed",
-  }
+  },
 };
 
 //viewOn:exports

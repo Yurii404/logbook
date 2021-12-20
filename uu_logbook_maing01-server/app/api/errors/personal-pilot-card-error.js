@@ -36,12 +36,10 @@ const Create = {
       this.message = "Personal Pilot Card Dao Create Failed.";
     }
   },
-
 };
 
 const Get = {
   UC_CODE: `${PERSONAL_PILOT_CARD_ERROR_PREFIX}get/`,
-
 
   LogBookMainDoesNotExist: class extends LogbookMainUseCaseError {
     constructor() {
@@ -73,8 +71,6 @@ const Get = {
       this.message = "Personal Pilot Card Get Dao Failed.";
     }
   },
-
-
 };
 
 const Delete = {
@@ -117,11 +113,10 @@ const Delete = {
       this.message = "Personal Pilot Card Delete Dao Failed.";
     }
   },
-
 };
 
 module.exports = {
   Delete,
   Get,
-  Create
+  Create,
 };

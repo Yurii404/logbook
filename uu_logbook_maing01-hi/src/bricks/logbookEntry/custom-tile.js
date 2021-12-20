@@ -37,40 +37,34 @@ export const CustomTile = createVisualComponent({
     //@@viewOn:render
     const className = Config.Css.css``;
     const attrs = UU5.Common.VisualComponent.getAttrs(props, className);
-    const currentNestingLevel = UU5.Utils.NestingLevel.getNestingLevel(
-      props,
-      STATICS
-    );
+    const currentNestingLevel = UU5.Utils.NestingLevel.getNestingLevel(props, STATICS);
 
     return currentNestingLevel ? (
-      <div  {...attrs} >
-        <UU5.Bricks.Div style={"background-color: pink;"} >
-        <UU5.Bricks.Text content={logbookEntry?.data?.departurePlace} />
-        <UU5.Bricks.Text content={logbookEntry?.data?.departureDate} />
-        <UU5.Bricks.Text content={logbookEntry?.data?.uuIdentity} />
+      <div {...attrs}>
+        <UU5.Bricks.Div>
+          <UU5.Bricks.Text content={logbookEntry?.data?.departurePlace} />
+          <UU5.Bricks.Text content={logbookEntry?.data?.departureDate} />
+          <UU5.Bricks.Text content={logbookEntry?.data?.uuIdentity} />
 
-        <UU5.Bricks.Button
-          className="active"
-          onClick={() => handleOpenDetailsModal(logbookEntry)}
-        >
-          Update
-          <UU5.Bricks.Icon icon="mdi-apple"/>
-        </UU5.Bricks.Button>
+          <UU5.Bricks.Button className="active" onClick={() => handleOpenDetailsModal(logbookEntry)}>
+            Update
+            <UU5.Bricks.Icon icon="mdi-apple" />
+          </UU5.Bricks.Button>
 
-        <UU5.Bricks.Button
-          style={"margin-left: 50px"}
-          className="active"
-          onClick={() => {
-            return confirm.open({
-              header: <UU5.Bricks.Header level={4} content="Delete logbook entry" />,
-              content: <UU5.Bricks.Div>Are you sure you want to logbook entry?</UU5.Bricks.Div>,
-              onRefuse: () => close(),
-              onConfirm: logbookEntry?.handlerMap?.delete
-            })
-          }}
-        >
-          DELETE
-        </UU5.Bricks.Button>
+          <UU5.Bricks.Button
+            style={"margin-left: 50px"}
+            className="active"
+            onClick={() => {
+              return confirm.open({
+                header: <UU5.Bricks.Header level={4} content="Delete logbook entry" />,
+                content: <UU5.Bricks.Div>Are you sure you want to logbook entry?</UU5.Bricks.Div>,
+                onRefuse: () => close(),
+                onConfirm: logbookEntry?.handlerMap?.delete,
+              });
+            }}
+          >
+            DELETE
+          </UU5.Bricks.Button>
         </UU5.Bricks.Div>
       </div>
     ) : null;

@@ -19,7 +19,6 @@ const WARNINGS = {
 };
 
 class PersonalPilotCardAbl {
-
   constructor() {
     this.validator = Validator.load();
     this.mainDao = DaoFactory.getDao("logbookMain");
@@ -65,7 +64,6 @@ class PersonalPilotCardAbl {
       throw new Errors.Delete.PersonalPilotCardGetDaoFailed({ uuAppErrorMap }, { pilot: uuPersonalPilotCard.id });
     }
 
-
     //HDS - 6 delete pilot
     let uuDeletedPersonalPilotCard = null;
     uuDeletedPersonalPilotCard = await this.pilotDao.delete(awid, uuPersonalPilotCard.id);
@@ -78,7 +76,6 @@ class PersonalPilotCardAbl {
       ...uuDeletedPersonalPilotCard,
       uuAppErrorMap,
     };
-
   }
 
   async get(awid, dtoIn, session, uuAppErrorMap = {}) {
@@ -122,7 +119,6 @@ class PersonalPilotCardAbl {
 
     //HDS -3 return
     return { ...uuPersonalPilotCard, uuAppErrorMap };
-
   }
 
   async create(awid, dtoIn, uuAppErrorMap = {}) {
@@ -171,9 +167,7 @@ class PersonalPilotCardAbl {
       ...uuAircraft,
       uuAppErrorMap,
     };
-
   }
-
 }
 
 module.exports = new PersonalPilotCardAbl();

@@ -1,14 +1,18 @@
 //@@viewOn:imports
 import UU5 from "uu5g04";
-import { createVisualComponent,useContext } from "uu5g04-hooks";
-import Config from "../config/config";
+import { createVisualComponent, useContext } from "uu5g04-hooks";
 import Uu5Tiles from "uu5tilesg02";
+import Config from "../config/config";
 
 import CustomTile from "./custom-tile";
 import { useContextModal } from "../../common/modal-manager";
 import { useSome } from "./use-logbook-entry";
 
-import { LogbookEntryUpdateForm, LogbookEntryUpdateHeader, LogbookEntryUpdateControls } from "./logbook-entry-update-form/logbook-entry-update-form";
+import {
+  LogbookEntryUpdateForm,
+  LogbookEntryUpdateHeader,
+  LogbookEntryUpdateControls,
+} from "./logbook-entry-update-form/logbook-entry-update-form";
 //@@viewOff:imports
 
 const STATICS = {
@@ -51,7 +55,14 @@ export const Tiles = createVisualComponent({
     function handleOpenCreateModal() {
       open({
         header: <LogbookEntryUpdateHeader />,
-        content: <LogbookEntryUpdateForm isCreateForm={true} listHandlerMap={listHandlerMap} closeModal={close} showAlert={showAlert} />,
+        content: (
+          <LogbookEntryUpdateForm
+            isCreateForm={true}
+            listHandlerMap={listHandlerMap}
+            closeModal={close}
+            showAlert={showAlert}
+          />
+        ),
         footer: <LogbookEntryUpdateControls isCreateForm={true} />,
       });
     }
@@ -65,7 +76,7 @@ export const Tiles = createVisualComponent({
         bgStyle: "filled",
         onClick: handleOpenCreateModal,
       },
-    ]
+    ];
     //@@viewOff:private
 
     //@@viewOn:interface
@@ -73,27 +84,19 @@ export const Tiles = createVisualComponent({
 
     //@@viewOn:render
     const className = Config.Css.css``;
-    const attrs = UU5.Common.VisualComponent.getAttrs(props, className);
-    const currentNestingLevel = UU5.Utils.NestingLevel.getNestingLevel(
-      props,
-      STATICS
-    );
+    UU5.Common.VisualComponent.getAttrs(props, className);
+    UU5.Utils.NestingLevel.getNestingLevel(props, STATICS);
     return (
-      <Uu5Tiles.ControllerProvider
-        data={data}
-      >
-        <Uu5Tiles.ActionBar
-          onItemSearch={handleItemSearch}
-          actions={getActions()}
-        />
+      <Uu5Tiles.ControllerProvider data={data}>
+        <Uu5Tiles.ActionBar onItemSearch={handleItemSearch} actions={getActions()} />
         <UU5.Bricks.Resize>
-        <UU5.Tiles.List
-          tile={<CustomTile getConfirmRef={getConfirmRef} handleOpenDetailsModal={handleOpenDetailsModal} />}
-          data={data}
-          tileHeight={100}
-          rowSpacing={2}
-          scrollElement={window}
-        />
+          <UU5.Tiles.List
+            tile={<CustomTile getConfirmRef={getConfirmRef} handleOpenDetailsModal={handleOpenDetailsModal} />}
+            data={data}
+            tileHeight={100}
+            rowSpacing={2}
+            scrollElement={window}
+          />
         </UU5.Bricks.Resize>
       </Uu5Tiles.ControllerProvider>
     );

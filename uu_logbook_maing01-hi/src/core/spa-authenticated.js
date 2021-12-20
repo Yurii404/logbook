@@ -34,7 +34,6 @@ const ROUTES = {
 
 export const SpaAuthenticated = createVisualComponent({
   ...STATICS,
-
   //@@viewOn:propTypes
   //@@viewOff:propTypes
 

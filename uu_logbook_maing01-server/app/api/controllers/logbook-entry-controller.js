@@ -2,9 +2,8 @@
 const LogbookEntryAbl = require("../../abl/logbook-entry-abl.js");
 
 class LogbookEntryController {
-
   listByPilot(ucEnv) {
-    return LogbookEntryAbl.listByPilot(ucEnv.getUri().getAwid(),ucEnv.getSession() ,ucEnv.getDtoIn());
+    return LogbookEntryAbl.listByPilot(ucEnv.getUri().getAwid(), ucEnv.getSession(), ucEnv.getDtoIn());
   }
 
   list(ucEnv) {
@@ -24,9 +23,8 @@ class LogbookEntryController {
   }
 
   create(ucEnv) {
-    return LogbookEntryAbl.create(ucEnv.getUri().getAwid(),ucEnv.getSession() ,ucEnv.getDtoIn());
+    return LogbookEntryAbl.create(ucEnv.getUri().getAwid(), ucEnv.getSession(), ucEnv.getDtoIn());
   }
-
 }
 
 module.exports = new LogbookEntryController();

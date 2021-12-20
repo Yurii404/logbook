@@ -28,16 +28,14 @@ const WARNINGS = {
 };
 
 class AircraftAbl {
-
   constructor() {
     this.validator = Validator.load();
     this.mainDao = DaoFactory.getDao("logbookMain");
     this.aircraftDao = DaoFactory.getDao("aircraft");
-    this.aircraftImageDao = DaoFactory.getDao("aircraftImage")
+    this.aircraftImageDao = DaoFactory.getDao("aircraftImage");
   }
 
-
-  async setState(awid, dtoIn, uuAppErrorMap ={}) {
+  async setState(awid, dtoIn, uuAppErrorMap = {}) {
     //HDS 2
     let uuLogbook = null;
 
@@ -75,7 +73,6 @@ class AircraftAbl {
       throw new Errors.SetState.AircraftGetDaoFailed({ uuAppErrorMap }, { id: dtoIn.id });
     }
 
-
     // HDS 4
 
     uuAircraft.state = dtoIn.state;
@@ -87,7 +84,6 @@ class AircraftAbl {
       ...uuAircraft,
       uuAppErrorMap,
     };
-
   }
 
   async getAircraftImage(awid, dtoIn, uuAppErrorMap = {}) {
@@ -125,8 +121,9 @@ class AircraftAbl {
     try {
       image = await this.aircraftImageDao.getDataByCode(awid, dtoIn.image);
     } catch (e) {
-      if (e.code === "uu-app-binarystore/objectNotFound") { // A3
-        throw new Errors.GetAircraftImage.AircraftImageDoesNotExist({uuAppErrorMap}, {image: dtoIn.image});
+      if (e.code === "uu-app-binarystore/objectNotFound") {
+        // A3
+        throw new Errors.GetAircraftImage.AircraftImageDoesNotExist({ uuAppErrorMap }, { image: dtoIn.image });
       }
       throw e;
     }
@@ -167,32 +164,30 @@ class AircraftAbl {
       Errors.List.InvalidDtoIn
     );
 
-
     // HDS 2
 
-    if(!dtoIn.pageInfo){
+    if (!dtoIn.pageInfo) {
       dtoIn.pageInfo = {
-        pageIndex : null,
-        pageSize : null
+        pageIndex: null,
+        pageSize: null,
       };
     }
-    if(!dtoIn.pageInfo.pageIndex){
+    if (!dtoIn.pageInfo.pageIndex) {
       dtoIn.pageInfo.pageIndex = 0;
     }
-    if(!dtoIn.pageInfo.pageSize){
+    if (!dtoIn.pageInfo.pageSize) {
       dtoIn.pageInfo.pageSize = 1000;
     }
 
     // HDS 3
 
-    let uuListOfIAircrafts = await this.aircraftDao.listByAwid(awid, dtoIn.pageInfo)
+    let uuListOfIAircrafts = await this.aircraftDao.listByAwid(awid, dtoIn.pageInfo);
 
     // HDS 4
     return {
       ...uuListOfIAircrafts,
       uuAppErrorMap,
-    }
-
+    };
   }
 
   async delete(awid, dtoIn, session, uuAppErrorMap = {}) {
@@ -241,18 +236,18 @@ class AircraftAbl {
       }
     }
 
+    //HDS - 5 check activa state
+    if (uuAircraft.state === "active") {
+      throw new Errors.Delete.AircraftInActiveState({ uuAppErrorMap }, { state: uuAircraft.image });
+    }
+
     //HDS 4 - delete image
     if (uuAircraft.image) {
       try {
-        await this.aircraftImageDao.deleteByCode(awid, uuAircraft.image)
+        await this.aircraftImageDao.deleteByCode(awid, uuAircraft.image);
       } catch (e) {
         throw new Errors.Delete.UuBinaryDeleteFailed({ uuAppErrorMap }, e);
       }
-    }
-
-    //HDS - 5 check activa state
-    if (uuAircraft.state !== "active") {
-      throw new Errors.Delete.AircraftInActiveState({ uuAppErrorMap }, { state: uuAircraft.image });
     }
 
     //HDS - 6 delete aircraft
@@ -267,7 +262,6 @@ class AircraftAbl {
       ...uuDeletedAircraft,
       uuAppErrorMap,
     };
-
   }
 
   async get(awid, dtoIn, session, uuAppErrorMap = {}) {
@@ -317,7 +311,6 @@ class AircraftAbl {
     }
     //HDS -3 return
     return { ...uuAircraft, uuAppErrorMap };
-
   }
 
   async create(awid, dtoIn, uuAppErrorMap = {}) {
@@ -359,13 +352,13 @@ class AircraftAbl {
       try {
         AircraftImage = await this.aircraftImageDao.create({ awid }, uuObject.image);
       } catch (e) {
-        if (e instanceof BinaryStoreError) { // A3
+        if (e instanceof BinaryStoreError) {
+          // A3
           throw new Errors.Create.AircraftImageDaoCreateFailed({ uuAppErrorMap }, e);
         }
         throw e;
       }
-      uuObject.image = AircraftImage.code
-
+      uuObject.image = AircraftImage.code;
     }
 
     // HDS 3 - create via DAO
@@ -384,9 +377,7 @@ class AircraftAbl {
       ...uuAircraft,
       uuAppErrorMap,
     };
-
   }
-
 }
 
 module.exports = new AircraftAbl();

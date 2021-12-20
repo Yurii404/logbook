@@ -1,5 +1,5 @@
 "use strict";
-const { UuObjectDao } = require("uu_appg01_server").ObjectStore
+const { UuObjectDao } = require("uu_appg01_server").ObjectStore;
 
 class PlaceMongo extends UuObjectDao {
   async createSchema() {
@@ -30,7 +30,7 @@ class PlaceMongo extends UuObjectDao {
   async delete(awid, id) {
     let filter = {
       awid,
-      id
+      id,
     };
     return await super.deleteOne(filter);
   }

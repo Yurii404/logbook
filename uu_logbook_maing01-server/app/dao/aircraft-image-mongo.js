@@ -1,9 +1,9 @@
-const {UuBinaryDao} = require("uu_appg01_binarystore");
+const { UuBinaryDao } = require("uu_appg01_binarystore");
 
 class AircraftImageMongo extends UuBinaryDao {
   async createSchema() {
-    await super.createIndex({awid: 1, _id: 1});
-    await super.createIndex({awid: 1, code: 1}, {unique: true});
+    await super.createIndex({ awid: 1, _id: 1 });
+    await super.createIndex({ awid: 1, code: 1 }, { unique: true });
   }
 
   async create(uuBinary, data) {
@@ -11,13 +11,13 @@ class AircraftImageMongo extends UuBinaryDao {
   }
 
   async deleteByCode(awid, code) {
-    return await super.deleteOne({awid, code});
+    return await super.deleteOne({ awid, code });
   }
 
   async getDataByCode(awid, code) {
     return await super.openDownloadStream({
       awid: awid,
-      code: code
+      code: code,
     });
   }
 }

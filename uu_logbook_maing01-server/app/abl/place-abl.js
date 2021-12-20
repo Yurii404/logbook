@@ -22,7 +22,6 @@ const WARNINGS = {
 };
 
 class PlaceAbl {
-
   constructor() {
     this.validator = Validator.load();
     this.mainDao = DaoFactory.getDao("logbookMain");
@@ -60,32 +59,30 @@ class PlaceAbl {
       Errors.List.InvalidDtoIn
     );
 
-
     // HDS 2
 
-    if(!dtoIn.pageInfo){
+    if (!dtoIn.pageInfo) {
       dtoIn.pageInfo = {
-        pageIndex : null,
-        pageSize : null
+        pageIndex: null,
+        pageSize: null,
       };
     }
-    if(!dtoIn.pageInfo.pageIndex){
+    if (!dtoIn.pageInfo.pageIndex) {
       dtoIn.pageInfo.pageIndex = 0;
     }
-    if(!dtoIn.pageInfo.pageSize){
+    if (!dtoIn.pageInfo.pageSize) {
       dtoIn.pageInfo.pageSize = 1000;
     }
 
     // HDS 3
 
-    let uuListOfIPlace = await this.placeDao.listByAwid(awid, dtoIn.pageInfo)
+    let uuListOfIPlace = await this.placeDao.listByAwid(awid, dtoIn.pageInfo);
 
     // HDS 4
     return {
       ...uuListOfIPlace,
       uuAppErrorMap,
-    }
-
+    };
   }
 
   async delete(awid, dtoIn, session, uuAppErrorMap = {}) {
@@ -127,7 +124,6 @@ class PlaceAbl {
       throw new Errors.Delete.PlaceGetDaoFailed({ uuAppErrorMap }, { place: uuPlace.id });
     }
 
-
     //HDS - 4 delete place
     let uuDeletedPlace = null;
     uuDeletedPlace = await this.placeDao.delete(awid, uuPlace.id);
@@ -140,7 +136,6 @@ class PlaceAbl {
       ...uuDeletedPlace,
       uuAppErrorMap,
     };
-
   }
 
   async get(awid, dtoIn, session, uuAppErrorMap = {}) {
@@ -184,7 +179,6 @@ class PlaceAbl {
 
     //HDS -3 return
     return { ...uuPlace, uuAppErrorMap };
-
   }
 
   async create(awid, dtoIn, uuAppErrorMap = {}) {
@@ -233,9 +227,7 @@ class PlaceAbl {
       ...uuAircraft,
       uuAppErrorMap,
     };
-
   }
-
 }
 
 module.exports = new PlaceAbl();

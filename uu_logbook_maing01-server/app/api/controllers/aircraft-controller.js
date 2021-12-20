@@ -2,8 +2,6 @@
 const AircraftAbl = require("../../abl/aircraft-abl.js");
 
 class AircraftController {
-
-
   setState(ucEnv) {
     return AircraftAbl.setState(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
   }
@@ -29,7 +27,6 @@ class AircraftController {
   create(ucEnv) {
     return AircraftAbl.create(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
   }
-
 }
 
 module.exports = new AircraftController();

@@ -2,7 +2,6 @@
 const PersonalPilotCardAbl = require("../../abl/personal-pilot-card-abl.js");
 
 class PersonalPilotCardController {
-
   delete(ucEnv) {
     return PersonalPilotCardAbl.delete(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
   }
@@ -14,7 +13,6 @@ class PersonalPilotCardController {
   create(ucEnv) {
     return PersonalPilotCardAbl.create(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
   }
-
 }
 
 module.exports = new PersonalPilotCardController();
